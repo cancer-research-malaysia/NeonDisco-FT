@@ -16,9 +16,17 @@ def list_files(path, prefix):
             for file in Path(path).rglob('*.tsv') 
             if file.is_file() and extract_sample_id(str(file), prefix)}
 
+def extract_fuscat_breakpoint(s):
+    return s.str.split(':').list.slice(0, 2).list.join(':')
+
+def natural_sort_key(s):
+    return [int(c) if c.isdigit() else c.lower() for c in re.split(r'(\d+)', s)]
+
 def wrangle_df(file_path, sample_id, tool_name):
     lazy_df = pl.scan_csv(file_path, separator="\t")
-    lazy_df = lazy_df.select([
+    match tool_name:
+        case 'Arriba':
+            return lazy_df.select([
             (pl.col('#gene1') + "::" + pl.col('gene2') + '__' + pl.col('breakpoint1').str.replace("chr", "") + "-" + pl.col('breakpoint2').str.replace("chr", "")).alias("fusionTranscriptID"),
             (pl.col('#gene1') + "::" + pl.col('gene2')).alias("fusionGeneID"),
             (pl.col('breakpoint1').str.replace("chr", "") + "-" + pl.col('breakpoint2').str.replace("chr", "")).alias("breakpointPair"),
@@ -29,9 +37,42 @@ def wrangle_df(file_path, sample_id, tool_name):
             'type', 
             'confidence',
             pl.lit(sample_id).alias("sampleID"),
+            pl.lit(sample_id).cast(pl.Utf8).str.zfill(3).alias("sampleID_padded"),  # Add padded sampleID
             pl.lit(tool_name).alias("toolID")
-        ])
-    return lazy_df
+            ])
+        case 'FusionCatcher':
+            base_columns = [
+            (pl.col('Gene_1_symbol(5end_fusion_partner)') + "::" + pl.col('Gene_2_symbol(3end_fusion_partner)') + '__' + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_1(5end_fusion_partner)')) + "-" + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_2(3end_fusion_partner)'))).alias("fusionTranscriptID"),
+            (pl.col('Gene_1_symbol(5end_fusion_partner)') + "::" + pl.col('Gene_2_symbol(3end_fusion_partner)')).alias("fusionGeneID"),
+            (extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_1(5end_fusion_partner)')) + "-" + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_2(3end_fusion_partner)'))).alias("breakpointPair"),
+            (pl.col('Fusion_point_for_gene_1(5end_fusion_partner)').str.split(":").list.get(2)).alias("strand1"),
+            (pl.col('Fusion_point_for_gene_2(3end_fusion_partner)').str.split(":").list.get(2)).alias("strand2")
+            ]
+            # Check if 'Predicted_effect' column exists
+            if 'Predicted_effect' in lazy_df.columns:
+                predicted_effect_columns = [
+                    pl.when(pl.col('Predicted_effect').str.contains('/'))
+                        .then(pl.col('Predicted_effect').str.split("/").list.get(0))
+                        .otherwise(pl.col('Predicted_effect'))
+                        .alias("site1"),
+                    pl.when(pl.col('Predicted_effect').str.contains('/'))
+                        .then(pl.col('Predicted_effect').str.split("/").list.get(1))
+                        .otherwise(pl.lit('.'))
+                        .alias("site2")
+                    ]
+            else:
+                predicted_effect_columns = [
+                    pl.lit('.').alias("site1"),
+                    pl.lit('.').alias("site2")
+                    ]
+            
+            return lazy_df.select(base_columns + predicted_effect_columns + [pl.lit('.').alias("type"),
+            pl.lit('.').alias("confidence"),
+            pl.lit(sample_id).alias("sampleID"),
+            pl.lit(sample_id).cast(pl.Utf8).str.zfill(3).alias("sampleID_padded"),  # Add padded sampleID
+            pl.lit(tool_name).alias("toolID")]) 
+        case _:
+            raise ValueError(f"Unsupported tool name: {tool_name}")
 
 def main():
     input_path = os.path.abspath(sys.argv[1])
@@ -54,21 +95,24 @@ def main():
 
     print(f'Reading {tool_name} TSV files by creating a list of lazy Frames...')
 
+    ###### TESTING BLOCK ##########
+    # lazy_df = []
     # for i, (sample_id, file_path) in enumerate(all_files.items()):
-    #     if i < 5:
+    #     if i < 10:
     #         df = wrangle_df(file_path, sample_id, tool_name)
     #         print(df.collect())
-
+    #         lazy_df.append(df)
+    # print(len(lazy_df))
+    
+    ###### BATCH MODE BLOCK ##########
     # Create a list of lazy DataFrames
-    lazy_dfs = [wrangle_df(file_path, sample_id, tool_name) 
-            for sample_id, file_path in all_files.items()]
+    lazy_dfs = [wrangle_df(file_path, sample_id, tool_name) for sample_id, file_path in all_files.items()]
     print(f"List of lazy Frames for all {len(all_files)} files has been created. Concatenating...")
     # Concatenate all lazy DataFrames
     combined_lazy_df = pl.concat(lazy_dfs)
     print("Concatenation completed. Printing...")
-    # Sort by Sample ID then collect 
-    results = combined_lazy_df.sort("sampleID").collect()
-    print(results)
+    # Sort by Sample ID (padded), drop that column, then collect 
+    results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").collect()
     # save as parquet and tsv
     print(f"Saving as parquet and tsv files...")
     results.write_parquet(f"data/{tool_name}-fusiontranscript-raw-list.parquet")
