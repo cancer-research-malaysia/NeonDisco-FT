@@ -37,7 +37,7 @@ def wrangle_df(file_path, sample_id, tool_name):
             'type', 
             'confidence',
             pl.lit(sample_id).alias("sampleID"),
-            pl.lit(sample_id).cast(pl.Utf8).str.zfill(3).alias("sampleID_padded"),  # Add padded sampleID
+            pl.lit(sample_id).cast(pl.Utf8).str.zfill(3).alias("sampleID_padded"),
             pl.lit(tool_name).alias("toolID")
             ])
         case 'FusionCatcher':
@@ -69,7 +69,7 @@ def wrangle_df(file_path, sample_id, tool_name):
             return lazy_df.select(base_columns + predicted_effect_columns + [pl.lit('.').alias("type"),
             pl.lit('.').alias("confidence"),
             pl.lit(sample_id).alias("sampleID"),
-            pl.lit(sample_id).cast(pl.Utf8).str.zfill(3).alias("sampleID_padded"),  # Add padded sampleID
+            pl.lit(sample_id).cast(pl.Utf8).str.zfill(3).alias("sampleID_padded"),
             pl.lit(tool_name).alias("toolID")]) 
         case _:
             raise ValueError(f"Unsupported tool name: {tool_name}")
@@ -113,6 +113,7 @@ def main():
     print("Concatenation completed. Printing...")
     # Sort by Sample ID (padded), drop that column, then collect 
     results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").collect()
+    print(results)
     # save as parquet and tsv
     print(f"Saving as parquet and tsv files...")
     results.write_parquet(f"data/{tool_name}-fusiontranscript-raw-list.parquet")
