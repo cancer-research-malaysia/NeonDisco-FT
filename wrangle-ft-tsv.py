@@ -49,18 +49,17 @@ def wrangle_df(file_path, sample_id, tool_name):
             (pl.col('Fusion_point_for_gene_2(3end_fusion_partner)').str.split(":").list.get(2)).alias("strand2")
             ]
             # Check if 'Predicted_effect' column exists
-            if 'Predicted_effect' in lazy_df.columns:
+            if 'Predicted_effect' in lazy_df.collect_schema().names():
+                # print(f'Sample ID: {sample_id} has Predicted_effect column')
                 predicted_effect_columns = [
+                    pl.col('Predicted_effect').str.extract(r'^([^/]+)(?:/|$)').alias('site1'),
                     pl.when(pl.col('Predicted_effect').str.contains('/'))
-                        .then(pl.col('Predicted_effect').str.split("/").list.get(0))
-                        .otherwise(pl.col('Predicted_effect'))
-                        .alias("site1"),
-                    pl.when(pl.col('Predicted_effect').str.contains('/'))
-                        .then(pl.col('Predicted_effect').str.split("/").list.get(1))
+                        .then(pl.col('Predicted_effect').str.extract(r'/(.+)$'))
                         .otherwise(pl.lit('.'))
-                        .alias("site2")
+                        .alias('site2')
                     ]
             else:
+                # print(f'Sample ID: {sample_id} does not have Predicted_effect column')
                 predicted_effect_columns = [
                     pl.lit('.').alias("site1"),
                     pl.lit('.').alias("site2")
@@ -96,22 +95,21 @@ def main():
     print(f'Reading {tool_name} TSV files by creating a list of lazy Frames...')
 
     ###### TESTING BLOCK ##########
-    # lazy_df = []
+
     # for i, (sample_id, file_path) in enumerate(all_files.items()):
-    #     if i < 10:
+    #     if i < 20:
     #         df = wrangle_df(file_path, sample_id, tool_name)
     #         print(df.collect())
-    #         lazy_df.append(df)
-    # print(len(lazy_df))
     
     ###### BATCH MODE BLOCK ##########
     # Create a list of lazy DataFrames
     lazy_dfs = [wrangle_df(file_path, sample_id, tool_name) for sample_id, file_path in all_files.items()]
     print(f"List of lazy Frames for all {len(all_files)} files has been created. Concatenating...")
     # Concatenate all lazy DataFrames
-    combined_lazy_df = pl.concat(lazy_dfs)
-    print("Concatenation completed. Printing...")
-    # Sort by Sample ID (padded), drop that column, then collect 
+    combined_lazy_df = pl.concat(lazy_dfs, rechunk=True)
+    print("Concatenation completed. Collecting...")
+    # print(combined_lazy_df.collect())
+    # Sort by Sample ID (padded), drop that column, then collect
     results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").collect()
     print(results)
     # save as parquet and tsv
