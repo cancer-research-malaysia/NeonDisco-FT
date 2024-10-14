@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import os
 import re
 import sys
@@ -51,9 +52,8 @@ def main():
         print(f'Error: Unknown prefix for tool name {prefix}. Aborting...')
         sys.exit(1)
 
-    
     print(f'Reading {tool_name} TSV files by creating a list of lazy Frames...')
-        
+
     # for i, (sample_id, file_path) in enumerate(all_files.items()):
     #     if i < 5:
     #         df = wrangle_df(file_path, sample_id, tool_name)
@@ -62,22 +62,17 @@ def main():
     # Create a list of lazy DataFrames
     lazy_dfs = [wrangle_df(file_path, sample_id, tool_name) 
             for sample_id, file_path in all_files.items()]
-    
     print(f"List of lazy Frames for all {len(all_files)} files has been created. Concatenating...")
-
     # Concatenate all lazy DataFrames
     combined_lazy_df = pl.concat(lazy_dfs)
-
     print("Concatenation completed. Printing...")
-
     # Sort by Sample ID then collect 
     results = combined_lazy_df.sort("sampleID").collect()
     print(results)
-    
     # save as parquet and tsv
     print(f"Saving as parquet and tsv files...")
-    results.write_parquet(f"{tool_name}-fusiontranscript-raw-list.parquet")
-    results.write_csv(f"{tool_name}-fusiontranscript-raw-list.tsv", separator="\t")
+    results.write_parquet(f"data/{tool_name}-fusiontranscript-raw-list.parquet")
+    results.write_csv(f"data/{tool_name}-fusiontranscript-raw-list.tsv", separator="\t")
 
     print("Done.")
 
