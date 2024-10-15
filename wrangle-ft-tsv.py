@@ -110,8 +110,12 @@ def main():
     print("Concatenation completed. Collecting...")
     # print(combined_lazy_df.collect())
     # Sort by Sample ID (padded), drop that column, then collect
-    results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").collect()
+    results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").with_columns(
+        [pl.col(col).cast(pl.Categorical) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointPair', 'strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'toolID']]).with_columns(
+            pl.col("sampleID").cast(pl.Int64)).collect()
+
     print(results)
+
     # save as parquet and tsv
     print(f"Saving as parquet and tsv files...")
     results.write_parquet(f"data/{tool_name}-fusiontranscript-raw-list.parquet")
