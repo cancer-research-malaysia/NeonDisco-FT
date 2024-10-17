@@ -1,3 +1,4 @@
 .DS_Store
 .vscode/
-data/FTmyBRCAs_raw/
+data/FT_myBRCAs_raw/
+data/FT_TCGANormals_raw/
