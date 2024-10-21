@@ -94,30 +94,30 @@ def main():
     print(f'Reading {tool_name} TSV files by creating a list of lazy Frames...')
 
     ###### TESTING BLOCK ##########
-    print(all_files)
-    for i, (sample_id, file_path) in enumerate(all_files.items()):
-        if i < 3:
-            df = wrangle_df(file_path, sample_id, tool_name)
-            print(df.collect())
+    # print(all_files)
+    # for i, (sample_id, file_path) in enumerate(all_files.items()):
+    #     if i < 10:
+    #         df = wrangle_df(file_path, sample_id, tool_name)
+    #         print(df.collect())
     
     # ###### BATCH MODE BLOCK ##########
-    # # Create a list of lazy DataFrames
-    # lazy_dfs = [wrangle_df(file_path, sample_id, tool_name) for sample_id, file_path in all_files.items()]
-    # print(f"List of lazy Frames for all {len(all_files)} files has been created. Concatenating...")
-    # # Concatenate all lazy DataFrames
-    # combined_lazy_df = pl.concat(lazy_dfs, rechunk=True)
-    # print("Concatenation completed. Collecting...")
+    # Create a list of lazy DataFrames
+    lazy_dfs = [wrangle_df(file_path, sample_id, tool_name) for sample_id, file_path in all_files.items()]
+    print(f"List of lazy Frames for all {len(all_files)} files has been created. Concatenating...")
+    # Concatenate all lazy DataFrames
+    combined_lazy_df = pl.concat(lazy_dfs, rechunk=True)
+    print("Concatenation completed. Collecting...")
 
-    # # Sort by Sample ID, drop that column, then collect
-    # results = combined_lazy_df.sort("sampleID").with_columns(
-    #     [pl.col(col).cast(pl.Categorical) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointPair', 'strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'toolID']]).with_columns(
-    #         pl.col("sampleID")).collect()
-    # print(results)
+    # Sort by Sample ID, drop that column, then collect
+    results = combined_lazy_df.sort("sampleID").with_columns(
+        [pl.col(col).cast(pl.Categorical) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointPair', 'strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'toolID']]).with_columns(
+            pl.col("sampleID")).collect()
+    print(results)
 
-    # # save as parquet and tsv
-    # print(f"Saving as parquet and tsv files...")
-    # results.write_parquet(f"data/FT_TCGANormals_raw/{tool_name}-TCGANormals-fusiontranscript-raw-list.parquet")
-    # results.write_csv(f"data/FT_TCGANormals_raw/{tool_name}-TCGANormals-fusiontranscript-raw-list.tsv", separator="\t")
+    # save as parquet and tsv
+    print(f"Saving as parquet and tsv files...")
+    results.write_parquet(f"output/TCGANormals/{tool_name}-TCGANormals-fusiontranscript-raw-list.parquet")
+    results.write_csv(f"output/TCGANormals/{tool_name}-TCGANormals-fusiontranscript-raw-list.tsv", separator="\t")
 
     print("Done.")
 

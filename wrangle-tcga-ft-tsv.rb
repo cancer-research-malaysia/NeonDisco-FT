@@ -3,8 +3,8 @@
 require 'fileutils'
 
 # Check if the correct number of arguments is provided
-if ARGV.length != 3
-  puts "Usage: ruby wrangle-tcga-ft-tsv.rb <base_directory_path> <subdirectory> <uuid_text_file_path>"
+if ARGV.length != 4
+  puts "Usage: ruby wrangle-tcga-ft-tsv.rb <base_directory_path> <subdirectory> <uuid_text_file_path> <output_directory>"
   exit 1
 end
 
@@ -19,19 +19,24 @@ def read_ids(file_path)
   File.readlines(file_path).map(&:strip)
 end
 
-def copy_and_rename_file(sample_tsv_filepath, id, tool)
+def copy_and_rename_file(sample_tsv_filepath, id, tool, out_dir)
   case tool
   when 'Arriba'
     new_name = "#{id}_arr.tsv"
+    tool_dir = File.join(out_dir, tool)
   when 'FusionCatcher'
     new_name = "#{id}_fc.tsv"
+    tool_dir = File.join(out_dir, tool)
   else
     raise ArgumentError, "Unsupported tool: #{tool}"
   end
 
-  new_path = File.join(File.dirname(File.dirname(sample_tsv_filepath)), new_name)
-  FileUtils.cp(sample_tsv_filepath, new_path)
-  puts "Copied and renamed: #{new_path}"
+  # Create the tool-specific directory
+  FileUtils.mkdir_p(tool_dir)
+  ##new_path = File.join(File.dirname(File.dirname(sample_tsv_filepath)), new_name)
+  out_path = File.join(tool_dir, new_name)
+  FileUtils.cp(sample_tsv_filepath, out_path)
+  puts "Copied and renamed: #{out_path}"
     
   rescue StandardError => e
     puts "Error processing #{id}: #{e.message}"
@@ -42,6 +47,7 @@ end
 base_dir = ARGV[0]
 tool_subdirectory = ARGV[1]
 uuid_file_path = ARGV[2]
+out_dir = ARGV[3]
 
 # check what is base_dir value
 if tool_subdirectory == 'Arriba'
@@ -76,7 +82,7 @@ ids = read_ids(uuid_file_path)
 ids.each do |id|
   tsv_file_path = find_tsv_file(input_dir_path, id, tsv_file_name, dir_suffix)
   if tsv_file_path
-    copy_and_rename_file(tsv_file_path, id, tool_subdirectory)
+    copy_and_rename_file(tsv_file_path, id, tool_subdirectory, out_dir)
   else
     puts "TSV file not found for ID: #{id}"
   end
