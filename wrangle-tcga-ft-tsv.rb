@@ -29,7 +29,7 @@ def copy_and_rename_file(sample_tsv_filepath, id, tool)
     raise ArgumentError, "Unsupported tool: #{tool}"
   end
 
-  new_path = File.join(File.dirname(sample_tsv_filepath), new_name)
+  new_path = File.join(File.dirname(File.dirname(sample_tsv_filepath)), new_name)
   FileUtils.cp(sample_tsv_filepath, new_path)
   puts "Copied and renamed: #{new_path}"
     
