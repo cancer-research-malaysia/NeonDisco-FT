@@ -7,20 +7,27 @@
 
 3. The resulting neoantigens can be highly immunogenic and may induce an antitumor adaptive immune response as the immune system will see them as 'nonself' (Gubin et al., 2015)
 
-4. Neoantigens can originate from both mutation-dependent and mutation-independent molecular processes (Fig 1)[assets/katsikis.png], but   
+4. Neoantigens can be generalized into mutation-dependent and mutation-independent neoantigens (**Figure 1**)that could be produced through various molecular mechanisms at different levels of regulation (genetic, transcriptional, translational, post-translational).
 
-4. Cancer neoantigens have canonically been studied in the context of SNVs in the protein-coding exome, but noncanonical neoantigens from genetic alterations that produce fusion genes and transcriptional aberrations that dysregulate normal alternative splicing events (ASE) remain largely unexplored (Capietto et al., 2022)
+![Figure 1: Categories of neoantigens (adapted from Katsikis et al., 2023)](assets/katsikis.png)
 
-5. Tumor mutational burden demonstrates positive correlation with response to immunotherapy (Samstein et al., 2019), but many cancer types have low mutational burden, so 
+5. Cancer neoantigens have canonically been studied in the context of SNVs in the protein-coding exome, but noncanonical neoantigens from genetic alterations that produce fusion genes and transcriptional aberrations that dysregulate normal alternative splicing events (ASE) remain largely unexplored (Capietto et al., 2022)
 
-6. Therefore, there is a
+6. These alternative sources of neoantigens can theoretically produce tumor-specific neopeptides (**Figure 2**) that can bind to MHC molecules to mount an adaptive immune response in patients, especially in tumor types with low tumor mutational burden, a proxy metric that tends to be biased towards SNV-derived neoantigens.
 
+![Figure 2: Theoretical sources of neoantigens (adapted from Bräunlein & Krackhardt, 2017)](assets/braunlein&krackhardt.jpg)
 
-### Knowledge Gap
+### Significance 
 
-The idea of personalized neoantigen-based vaccine is exciting but logistically daunting and focusing research efforts on discovering shared immunogenic tumor-specific neoantigens that can be used to aid immunothrapy for a specific cancer occurring within a specific population of patinets may be more realistic and achievable.
+* Personalized neoantigen-based vaccine development targets a set of both unique, *private* neoantigens alongside recurrent, *public* neoantigens. Such vaccine targets are tailored to individual patients and thus impose prohibitive logistical and financial contraints to widespread clinical accessibility (Pearlman et al., 2021)
 
-A neoantigen database, specifically one that collates neoantigen data from sources beyond SN mutations and indels of coding regions of the genome, would expand the space of neoantigen repertoire to inform future neoantigen-based therapeutic development. We also attempt to contextualize genomic data obtained from local cohort of patients in Malaysia to create a more direct therapeutic impact and contribute back to the local community, both in general and in cancer clinical context.
+* Focusing research efforts on discovering shared (public) tumor-specific neoantigens that can be targeted via an *of-the-shelf* immunotherapy may be more realistic and may speed up clinical translation
+
+* Compiling a neoantigen database that covers neoantigens from sources beyond single base mutations and indels of coding regions of the genome would expand the space of neoantigen repertoire to inform future neoantigen-based therapeutic development
+
+* Contextualizing neoantigen discovery with a specific Asian population would also address genomic data inequity that is currently inherent in genomic precision medicine field that is predominantly Western or European-centric (Tawfik et al., 2023)
+
+* This might lead to a more direct therapeutic impact for local Asian community in Malaysia
 
 
 
