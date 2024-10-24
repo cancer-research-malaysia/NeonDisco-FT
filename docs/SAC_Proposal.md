@@ -17,6 +17,8 @@
 6. These alternative sources of neoantigens can theoretically produce tumor-specific neopeptides (**Figure 2**) that can bind to MHC molecules to mount an adaptive immune response in patients, especially in tumor types with low tumor mutational burden, a proxy metric that tends to be biased towards SNV-derived neoantigens.
 
 ![Figure 2: Theoretical sources of neoantigens (adapted from Bräunlein & Krackhardt, 2017)](assets/braunlein&krackhardt.jpg)
+<em>Figure 2: Theoretical sources of neoantigens (adapted from Bräunlein & Krackhardt, 2017)</em>
+
 
 ### Significance 
 
@@ -33,16 +35,19 @@
 
 ### Proposed Methodology
 
-* We have designed a neoantigen prediction framework (Fig 2) from which a Nextflow pipeline could be designed to identify potential neoantigens derived from alternative tumor-specific sources of genomic and transcriptomic alterations as described previously. 
+* We have designed a Nextflow pipeline following a generalized neoantigen prediction framework (**Figure 3**) to identify potential neoantigens derived from alternative tumor-specific sources of genomic and transcriptomic alterations as described previously. 
 
-The Nextflow pipeline is highly modular and would allow different prediction modules to be "plugged and played" as desired, based on a specific neoantigen-deriving aberrant source. 
+* The Nextflow pipeline is highly modular and would allow different prediction modules to be "plugged and played" as desired, based on a specific neoantigen-deriving aberrant source. Two aberrant neoantigen-producing mechanisms have been chosen as our primary focus in establishing an Asian cancer neoantigen database.
+
+	1. ***Gene fusion neopeptides***: They represent the aberrant output of gene fusions caused by chromosomal genetic rearrangements via translocations, deletions, or inversions
+
+	2. ***Alternatively spliced neopeptides***: We will focus on *aberrant* splicing events that produce neopeptides that are absent in normal cells
 
 #### ***Gene Fusions***
 
-lorem ipsum
+As a preliminary step, we have optimized a gene fusion transcript calling using two published bioinformatics tools – Arriba and FusionCatcher.
 
 #### ***Aberrant ASE***
 
 lorem ipsum
 
-#### ***
