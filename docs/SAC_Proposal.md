@@ -15,7 +15,7 @@
 
 5. SNV-derived neoantigens have been most of the research focus, but unconventional neoantigens from genetic alterations that produce fusion genes and transcriptional aberrations that dysregulate normal alternative splicing events (ASE) remain largely unexplored (Capietto et al., 2022)
 
-6. These alternative sources of neoantigens can also produce tumor-specific neopeptides (**Fig. 2**), especially in tumor types with low tumor mutational burden, a proxy metric that tends to be biased towards SNV-derived neoantigens
+6. These alternative sources of neoantigens can also produce tumor-specific neopeptides (**Fig. 2**), especially in tumor types with low tumor mutational burden, a proxy metric that is biased towards SNV-derived neoantigens
 
 ![Fig. 2: Theoretical sources of neoantigens (adapted from Bräunlein & Krackhardt, 2017)](assets/braunlein&krackhardt.jpg)
 
@@ -24,13 +24,13 @@
 
 ### Significance 
 
-* Personalized neoantigen-based vaccine development targets a set of both unique, *private* neoantigens alongside recurrent, *public* neoantigens. Such vaccine targets are tailored to individual patients and thus impose prohibitive logistical and financial contraints to widespread clinical accessibility (Pearlman et al., 2021)
+* Personalized neoantigen-based vaccine development targets a set of both unique, *private* neoantigens alongside recurrent, *public* neoantigens. 
 
-* Focusing research efforts on discovering shared (public) tumor-specific neoantigens that can be targeted via an *of-the-shelf* immunotherapy may be more realistic and may speed up clinical translation
+* Such individually-tailored vaccine targets impose prohibitive logistical and financial contraints to widespread clinical accessibility (Pearlman et al., 2021), thus discovering shared tumor-specific neoantigens for an *off-the-shelf* immunotherapeeutic strategy may be more realistic
 
-* Compiling a neoantigen database that covers neoantigens from sources beyond single base mutations and indels of coding regions of the genome would expand the space of neoantigen repertoire to inform future neoantigen-based therapeutic development
+* Compiling a neoantigen database that covers neoantigens from sources beyond SNVs would expand the space of neoantigen repertoire to inform future neoantigen-based therapeutic development
 
-* Contextualizing neoantigen discovery with a specific Asian population would also address genomic data inequity that is currently inherent in genomic precision medicine field that is predominantly Western or European-centric (Tawfik et al., 2023), hopefully leading to a more direct therapeutic impact for local Asian community in Malaysia
+* Basing neoantigen discovery off a specific Asian population address genomic data inequity that is currently inherent in genomic precision medicine that is predominantly Western or European-centric (Tawfik et al., 2023)
 
 **Project Objective** 
 > **Identification of highly immunogenic and shared, public neoantigen candidates in Asian populations by harnessing neoantigen-producing sources beyond SNVs to expand neoantigen prediction space for a faster and more comprehensive clinical translation**
@@ -47,17 +47,15 @@ We have designed a Nextflow pipeline following a generalized neoantigen predicti
 
 The Nextflow pipeline is highly modular and would allow different prediction modules to be "plugged and played" as desired, based on a specific neoantigen-deriving aberrant source. Two aberrant neoantigen-producing mechanisms have been chosen as our primary focus in establishing an Asian cancer neoantigen database.
 
-	1. ***Gene fusion neoantigens (FNs)***: They represent the aberrant output of gene fusions caused by chromosomal genetic rearrangements via translocations, deletions, or inversions
+i. ***Gene fusion neoantigens (FNs)***: They represent the aberrant output of gene fusions caused by chromosomal genetic rearrangements via translocations, deletions, or inversions
 
-	2. ***Alternative splicing-derived neoantigens (ASNs)***: We will focus on *aberrant* splicing events that produce neopeptides that are absent in normal cells
+ii. ***Alternative splicing-derived neoantigens (ASNs)***: We will focus on *aberrant* splicing events that produce neopeptides that are absent in normal cells
 
 ##### ***Gene Fusions***
 
-* We optimized a gene fusion transcript calling using two published bioinformatics tools – Arriba and FusionCatcher on RNA-seq data from our local breast cancer cohort, MyBRCA, and combined the fusion transcript calling output into a preliminary fusion transcript candidate list
+* We optimized a gene fusion transcript calling using two published bioinformatics tools – `Arriba` (Uhrig et al., 2021) and `FusionCatcher` (Nicorici et al., 2014) - on RNA-seq data from our local breast cancer cohort, MyBRCA, and combined the fusion transcript calling output into a preliminary fusion transcript candidate list
 
 * These would be filtered for tumor-specific and recurrent, public fusion transcripts using similar fusion transcript calling output obtained from sample-matched RNA-seq data of tumor-adjacent normal cells
-
-***insert graphical details of all the tools used in the pipeline?***
 
 ##### ***Alternative Splicing Events***
 
@@ -69,12 +67,23 @@ The Nextflow pipeline is highly modular and would allow different prediction mod
 
 * Dysregulation in alternative RNA splicing is commonly found in tumor transcriptomes (Dvinge & Bradley, 2015), and tumor-specific intron retention splicing events contribute a significant proportion of neoantigen load in cancer (Smart et al., 2018). Novel exon-exon junctions (EEJs) could also potentially generate immunogenic peptides, and recurrent EEJ-derived neoepitopes that are tumor-exclusive have also been previously reported (Kahles et al., 2018).  
 
-* Two candidate tools that can identify specific AS events, especially intron retention, are `spladder`, implemented in Python, and `FRASER`, packaged on Bioconductor for use in R environments.
+* Two candidate tools that can identify specific AS events, especially intron retention, are `spladder`, implemented in Python (Kehles et al., 2016), and `FRASER` (Mertes et al., 2021), packaged on Bioconductor for use in R environments. They take RNA-seq sequencing data as inputs and both have sufficient usage documentations.
 
-#### B. HLA Binding Prediction
+#### B. Neoepitope:HLA Binding Prediction
 
+The next major step in the *in silico* framework involves testing which of the predicted neoantigen has good predicted binding to the HLA molecules (MHC class I or MHC class II).
 
-#### C. T-Cell Recognition Prediction
+##### ***HLA Typing***
+
+* Using a program developed for HLA typing on both whole exome sequencing (WES) and RNA-seq data, `HLA-HD` (Kawaguchi et al., 2017), applied on our myBRCA cohort WES data, a set of expressed HLA alleles would be acquired.
+
+* The expressed HLA allele set would be collated cohort-wide to enable identification of public neoantigens recurrent amongst the patients in the cohort.
+
+##### ***Peptide–MHC Binding Characterization***
+
+* Using a suite of computational programs from `pVactools` (Hundal et al., 2020), each potential neoepitope derived from the identified tumor-specific neoantigens would be scored and characterized for its binding to different MHC molecules based on the cohort-wide expressed HLA allele set.
+
+#### C. T-Cell Recognition Prediction ?
 
 
 
