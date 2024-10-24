@@ -7,9 +7,10 @@
 
 3. The resulting neoantigens can be highly immunogenic and may induce an antitumor adaptive immune response as the immune system will see them as 'nonself' (Gubin et al., 2015)
 
-4. Neoantigens can be generalized into mutation-dependent and mutation-independent neoantigens (**Figure 1**)that could be produced through various molecular mechanisms at different levels of regulation (genetic, transcriptional, translational, post-translational).
+4. Neoantigens can be generalized into mutation-dependent and mutation-independent neoantigens (**Figure 1**) that could be produced through various molecular mechanisms at different levels of regulation (genetic, transcriptional, translational, post-translational).
 
 ![Figure 1: Categories of neoantigens (adapted from Katsikis et al., 2023)](assets/katsikis.png)
+<em>Figure 1: Categories of neoantigens (adapted from Katsikis et al., 2023)</em>
 
 5. Cancer neoantigens have canonically been studied in the context of SNVs in the protein-coding exome, but noncanonical neoantigens from genetic alterations that produce fusion genes and transcriptional aberrations that dysregulate normal alternative splicing events (ASE) remain largely unexplored (Capietto et al., 2022)
 
@@ -25,17 +26,10 @@
 
 * Compiling a neoantigen database that covers neoantigens from sources beyond single base mutations and indels of coding regions of the genome would expand the space of neoantigen repertoire to inform future neoantigen-based therapeutic development
 
-* Contextualizing neoantigen discovery with a specific Asian population would also address genomic data inequity that is currently inherent in genomic precision medicine field that is predominantly Western or European-centric (Tawfik et al., 2023)
+* Contextualizing neoantigen discovery with a specific Asian population would also address genomic data inequity that is currently inherent in genomic precision medicine field that is predominantly Western or European-centric (Tawfik et al., 2023), hopefully leading to a more direct therapeutic impact for local Asian community in Malaysia
 
-* This might lead to a more direct therapeutic impact for local Asian community in Malaysia
-
-
-
-### Main Objectives
-
-A) Identification of shared, public neoantigen candidates found amAsian populations owith predicted high immunogenicity for translation into clinical therapy
-
-B) Harnessing mutation-independent neoantigen sources to expand search of therapeutically relevant neoantigens for vaccine targets
+**Project Objective** 
+> **Identification of highly immunogenic and shared, public neoantigen candidates in Asian populations by harnessing neoantigen-producing sources beyond SNVs to expand neoantigen prediction space for a faster and more comprehensive clinical translation**
 
 ### Proposed Methodology
 
