@@ -7,7 +7,7 @@
 
 3. The resulting neoantigens can be immunogenic and may induce an antitumor adaptive immune response as the immune system will see them as 'nonself' (Gubin et al., 2015)
 
-4. Neoantigens can be generalized into mutation-dependent and mutation-independent neoantigens (Fig. 1), that originate from processes at different levels of regulation
+4. Neoantigens can be generalized into mutation-dependent and mutation-independent neoantigens (Fig. 1), which originate from processes at different levels of regulation
 
 ![Fig. 1: Categories of neoantigens (adapted from Katsikis et al., 2023)](assets/katsikis.png)
 
@@ -37,11 +37,11 @@
 
 ### Proposed Methodology
 
-We have designed a Nextflow pipeline following a generalized neoantigen prediction framework (**Figure 3**) to identify potential neoantigens derived from alternative tumor-specific sources of genomic and transcriptomic alterations as described previously. 
+We have designed a Nextflow pipeline following a generalized neoantigen prediction framework (**Fig. 3**) to identify potential neoantigens derived from alternative tumor-specific sources of genomic and transcriptomic alterations as described previously. 
 
-![Figure 3: General in silico framework for cancer neoantigen identification (adapted from Xie et al., 2023)](assets/xie.png)
+![Fig. 3: General in silico framework for cancer neoantigen identification (adapted from Xie et al., 2023)](assets/xie.png)
 
-<em>Figure 3: General in silico framework for cancer neoantigen identification (adapted from Xie et al., 2023)</em>
+<em>Fig. 3: General in silico framework for cancer neoantigen identification (adapted from Xie et al., 2023)</em>
 
 #### A. Aberrant Transcriptome Detection
 
