@@ -1,17 +1,22 @@
-### **Fusion Transcript Data Wrangling**
+## **Fusion Transcript Raw Data Exploration**
 
-#### Concatenating and Filtering Raw Fusion Transcript Output from Arriba and FusionCatcher
+### Collating and Filtering Raw Fusion Transcripts from Arriba and FusionCatcher
 
 This notebook details the processes (semi-automated) done to further process the raw output files from Arriba and FusionCatcher fusion transcript callers. 
 
-1. Run the `wrangle-ft-tsv.py` script to generate fusion transcript list from Arriba and FusionCatcher output files. The script takes a mandatory input of path to the directory where sample-specific fusion call output files from Arriba or FusionCatcher are stored as the first argument, and the specific string that is used to identify tool name (`arr` for Arriba fusion transcript call output file prefix, for instance). 
+1. Run the `pypolars-process-ft-tsv.py` script to generate fusion transcript list from Arriba and FusionCatcher output files. The script takes a mandatory input of path to the directory where sample-specific fusion call output files from Arriba or FusionCatcher are stored as the first argument, and the specific string that is used to identify tool name (`arr` for Arriba fusion transcript call output file prefix, for instance). 
 
 For example:
-> ``` wrangle-ft-tsv.py data/FTmyBRCAs_raw/Arriba arr ```
+> ``` pypolars-process-ft-tsv.py data/FTmyBRCAs_raw/Arriba arr ```
+
+Do the same for the FusionCatcher raw output files, as well as the same Arriba and FusionCatcher output files generated from the processing 113 TCGANormals (to use as a panel of normals for FT filtering).
 
 
 ```python
+# first, import packages
 import polars as pl
+
+
 ```
 
 
