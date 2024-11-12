@@ -29,7 +29,7 @@ def wrangle_df(file_path, sample_id, tool_name):
             return lazy_df.select([
             (pl.col('#gene1') + "::" + pl.col('gene2') + '__' + pl.col('breakpoint1').str.replace("chr", "") + "-" + pl.col('breakpoint2').str.replace("chr", "")).alias("fusionTranscriptID"),
             (pl.col('#gene1') + "::" + pl.col('gene2')).alias("fusionGeneID"),
-            (pl.col('breakpoint1').str.replace("chr", "") + "-" + pl.col('breakpoint2').str.replace("chr", "")).alias("breakpointPair"),
+            (pl.col('breakpoint1').str.replace("chr", "") + "-" + pl.col('breakpoint2').str.replace("chr", "")).alias("breakpointID"),
             (pl.col('strand1(gene/fusion)').str.split("/").list.get(1)).alias("strand1"),
             (pl.col('strand2(gene/fusion)').str.split("/").list.get(1)).alias("strand2"),
             'site1', 
@@ -44,7 +44,7 @@ def wrangle_df(file_path, sample_id, tool_name):
             base_columns = [
             (pl.col('Gene_1_symbol(5end_fusion_partner)') + "::" + pl.col('Gene_2_symbol(3end_fusion_partner)') + '__' + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_1(5end_fusion_partner)')) + "-" + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_2(3end_fusion_partner)'))).alias("fusionTranscriptID"),
             (pl.col('Gene_1_symbol(5end_fusion_partner)') + "::" + pl.col('Gene_2_symbol(3end_fusion_partner)')).alias("fusionGeneID"),
-            (extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_1(5end_fusion_partner)')) + "-" + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_2(3end_fusion_partner)'))).alias("breakpointPair"),
+            (extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_1(5end_fusion_partner)')) + "-" + extract_fuscat_breakpoint(pl.col('Fusion_point_for_gene_2(3end_fusion_partner)'))).alias("breakpointID"),
             (pl.col('Fusion_point_for_gene_1(5end_fusion_partner)').str.split(":").list.get(2)).alias("strand1"),
             (pl.col('Fusion_point_for_gene_2(3end_fusion_partner)').str.split(":").list.get(2)).alias("strand2")
             ]
@@ -111,15 +111,15 @@ def main():
     # print(combined_lazy_df.collect())
     # Sort by Sample ID (padded), drop that column, then collect
     results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").with_columns(
-        [pl.col(col).cast(pl.Categorical) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointPair', 'strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'toolID']]).with_columns(
-            pl.col("sampleID").cast(pl.Int64)).collect()
+        [pl.col(col).cast(pl.Categorical) for col in ['strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'toolID']]).with_columns(
+            [pl.col(col).cast(pl.Utf8) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointID']]).collect()
 
     print(results)
 
     # save as parquet and tsv
     print(f"Saving as parquet and tsv files...")
-    results.write_parquet(f"data/{tool_name}-fusiontranscript-raw-list.parquet")
-    results.write_csv(f"data/{tool_name}-fusiontranscript-raw-list.tsv", separator="\t")
+    results.write_parquet(f"output/MyBrCa/{tool_name}-FT-all-unfilt-list-v2.parquet")
+    results.write_csv(f"data/{tool_name}-FT-all-unfilt-list-v2.tsv", separator="\t")
 
     print("Done.")
 
