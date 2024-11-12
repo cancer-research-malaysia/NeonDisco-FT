@@ -49,7 +49,7 @@ def wrangle_df(file_path, sample_id, tool_name):
             (pl.col('Fusion_point_for_gene_2(3end_fusion_partner)').str.split(":").list.get(2)).alias("strand2")
             ]
             # Check if 'Predicted_effect' column exists
-            if 'Predicted_effect' in lazy_df.collect_schema().names():
+            if 'Predicted_effect' in lazy_df.columns:
                 # print(f'Sample ID: {sample_id} has Predicted_effect column')
                 predicted_effect_columns = [
                     pl.col('Predicted_effect').str.extract(r'^([^/]+)(?:/|$)').alias('site1'),
@@ -108,18 +108,19 @@ def main():
     # Concatenate all lazy DataFrames
     combined_lazy_df = pl.concat(lazy_dfs, rechunk=True)
     print("Concatenation completed. Collecting...")
-    # print(combined_lazy_df.collect())
-    # Sort by Sample ID (padded), drop that column, then collect
-    results = combined_lazy_df.sort("sampleID_padded").drop("sampleID_padded").with_columns(
-        [pl.col(col).cast(pl.Categorical) for col in ['strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'toolID']]).with_columns(
-            [pl.col(col).cast(pl.Utf8) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointID']]).collect()
+    combined_df = combined_lazy_df.collect()
+    
+    # Sort by Sample ID (padded), drop that column
+    results = combined_df.sort("sampleID_padded").drop("sampleID_padded").with_columns(
+        [pl.col(col).cast(pl.Categorical) for col in ['strand1', 'strand2', 'site1', 'site2', 'type', 'confidence', 'sampleID', 'toolID']]).with_columns(
+            [pl.col(col).cast(pl.Utf8) for col in ['fusionTranscriptID', 'fusionGeneID', 'breakpointID']])
 
     print(results)
 
     # save as parquet and tsv
     print(f"Saving as parquet and tsv files...")
     results.write_parquet(f"output/MyBrCa/{tool_name}-FT-all-unfilt-list-v2.parquet")
-    results.write_csv(f"data/{tool_name}-FT-all-unfilt-list-v2.tsv", separator="\t")
+    results.write_csv(f"output/MyBrCa/{tool_name}-FT-all-unfilt-list-v2.tsv", separator="\t")
 
     print("Done.")
 
