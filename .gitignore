@@ -4,3 +4,6 @@ data/FT_myBRCAs_raw/
 data/FT_TCGANormals_raw/*/*_outdir/
 data/FT_TCGANormals_raw/*/*.sh
 data/FT_TCGANormals_raw/*/*.log.txt
+.calva/
+.lsp/
+.clj-kondo/
