@@ -30,8 +30,8 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add README.md
-        git commit -m "Convert Jupyter Notebook to README.md" -a
+        git add README.md README.html
+        git commit -m "Convert Jupyter Notebook to README.md and README.html" -a
 
     - name: Push changes
       if: success()
