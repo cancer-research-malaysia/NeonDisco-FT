@@ -23,6 +23,9 @@ from itables import init_notebook_mode, show
 #init_notebook_mode(all_interactive=True)
 import itables.options as opt
 opt.maxBytes = "100KB"
+
+pd.set_option('display.html.table_schema', False)
+pd.set_option('display.html.use_mathjax', False)
 ```
 
 
