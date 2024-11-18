@@ -2334,14 +2334,14 @@ class NetworkAnalyzer:
 		for bp, degree in sorted(zip(self.breakpoints, self.breakpoint_degrees), 
 								key=lambda x: x[1], reverse=True)[:5]:
 			print(f"  {bp}: {degree}")
-		print(f"\nTop 10 Breakpoints by Degree Centrality:")
-    	# Create list of (breakpoint, centrality) tuples and sort by centrality
-		centrality_pairs = list(zip(self.breakpoints, self.breakpoint_centrality))
-		sorted_by_centrality = sorted(centrality_pairs, key=lambda x: x[1], reverse=True)
+		# print(f"\nTop 10 Breakpoints by Degree Centrality:")
+    	# # Create list of (breakpoint, centrality) tuples and sort by centrality
+		# centrality_pairs = list(zip(self.breakpoints, self.breakpoint_centrality))
+		# sorted_by_centrality = sorted(centrality_pairs, key=lambda x: x[1], reverse=True)
 		
-		# Print top 10
-		for bp, centrality in sorted_by_centrality[:10]:
-			print(f"  {bp}: {centrality:.3f}")
+		# # Print top 10
+		# for bp, centrality in sorted_by_centrality[:10]:
+		# 	print(f"  {bp}: {centrality:.3f}")
 ```
 
 #### Test Class on Toy Data
