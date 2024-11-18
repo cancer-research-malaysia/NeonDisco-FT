@@ -71,7 +71,7 @@ Arriba MyBrCa datatable dimension: <b>(49465, 11)</b>
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe tex2jax_ignore">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -197,7 +197,7 @@ FusionCatcher MyBrCa datatable dimension: <b>(31364, 11)</b>
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe tex2jax_ignore">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -323,7 +323,7 @@ Arriba TCGA-Normals datatable dimension: <b>(10802, 11)</b>
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe tex2jax_ignore">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -449,7 +449,7 @@ FusionCatcher TCGA-Normals datatable dimension: <b>(3759, 11)</b>
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe tex2jax_ignore">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -585,7 +585,7 @@ Concatenated MyBrCa Arriba+FusionCatcher datatable dimension: <b>(80829, 11)</b>
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe tex2jax_ignore">
   <thead>
     <tr style="text-align: right;">
       <th></th>
