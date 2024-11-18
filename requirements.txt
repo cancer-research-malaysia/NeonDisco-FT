@@ -7,3 +7,4 @@ nbconvert
 nbformat
 pretty-jupyter
 pretty_jupyter_metadata_form
+lxml_html_clean
