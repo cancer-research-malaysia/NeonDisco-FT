@@ -870,7 +870,7 @@ mybrca_ccdf_pan
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="1" class="dataframe tex2jax_ignore">
   <thead>
     <tr style="text-align: right;">
       <th></th>
