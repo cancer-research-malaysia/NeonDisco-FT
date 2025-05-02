@@ -1,0 +1,127 @@
+fusionTranscriptID	fusionGenePair	breakpointID	strand1	strand2	site1	site2	type	confidence	sampleID	toolID
+SPAG5-AS1::RAB11FIP4__17:28616389-17:31529712	SPAG5-AS1::RAB11FIP4	17:28616389-17:31529712	-	-	exon	intron	duplication	high	373	Arriba
+NSF::ENSG00000289599__17:46643259-17:48009736	NSF::ENSG00000289599	17:46643259-17:48009736	+	+	CDS/splice-site	exon/splice-site	deletion	high	373	Arriba
+NSF::ENSG00000289599__17:46643259-17:48012093	NSF::ENSG00000289599	17:46643259-17:48012093	+	+	CDS/splice-site	exon/splice-site	deletion	high	373	Arriba
+NSF::ENSG00000289599__17:46643259-17:48012140	NSF::ENSG00000289599	17:46643259-17:48012140	+	+	CDS/splice-site	exon/splice-site	deletion	medium	373	Arriba
+NSF::ENSG00000289599__17:46643259-17:48011155	NSF::ENSG00000289599	17:46643259-17:48011155	+	+	CDS/splice-site	exon/splice-site	deletion	medium	373	Arriba
+ENPP1::STX7__6:131880034-6:132464323	ENPP1::STX7	6:131880034-6:132464323	+	+	CDS/splice-site	intron	deletion/5'-5'	high	373	Arriba
+SUPT6H::ENSG00000261976__17:28662342-17:50841925	SUPT6H::ENSG00000261976	17:28662342-17:50841925	+	-	5'UTR/splice-site	exon/splice-site	inversion	high	373	Arriba
+ZNF626::ENSG00000307017(15051),ENSG00000309850(33023)__19:20645684-5:68389851	ZNF626::ENSG00000307017(15051),ENSG00000309850(33023)	19:20645684-5:68389851	-	+	CDS/splice-site	intergenic	translocation	high	373	Arriba
+ENSG00000269110::ENSG00000307017(15051),ENSG00000309850(33023)__19:20645684-5:68389851	ENSG00000269110::ENSG00000307017(15051),ENSG00000309850(33023)	19:20645684-5:68389851	-	+	exon/splice-site	intergenic	translocation	high	373	Arriba
+KANSL1::ENSG00000307718__17:46170855-17:40430945	KANSL1::ENSG00000307718	17:46170855-17:40430945	-	-	CDS/splice-site	exon/splice-site	deletion	high	373	Arriba
+KANSL1::ENSG00000307718__17:46170855-17:40426518	KANSL1::ENSG00000307718	17:46170855-17:40426518	-	-	CDS/splice-site	exon/splice-site	deletion	high	373	Arriba
+ENPP1::TAAR4P(918),ENSG00000286663(3618)__6:131880034-6:132596354	ENPP1::TAAR4P(918),ENSG00000286663(3618)	6:131880034-6:132596354	+	+	CDS/splice-site	intergenic	deletion	high	373	Arriba
+ENSG00000301334::SLFN5__17:28209412-17:35258651	ENSG00000301334::SLFN5	17:28209412-17:35258651	-	+	exon/splice-site	5'UTR/splice-site	inversion	high	373	Arriba
+ENSG00000301334::SLFN5__17:28227767-17:35258651	ENSG00000301334::SLFN5	17:28227767-17:35258651	-	+	exon/splice-site	5'UTR/splice-site	inversion	medium	373	Arriba
+ZNF486::ENSG00000294647__19:20167360-19:19358961	ZNF486::ENSG00000294647	19:20167360-19:19358961	+	-	CDS/splice-site	exon/splice-site	inversion	high	373	Arriba
+DDX11L8(1686)::LINC01982__12:10624-17:52424728	DDX11L8(1686)::LINC01982	12:10624-17:52424728	-	+	intergenic	exon/splice-site	translocation	high	373	Arriba
+KANSL1::TOP2A__17:46170855-17:40416895	KANSL1::TOP2A	17:46170855-17:40416895	-	-	CDS/splice-site	CDS/splice-site	deletion	high	373	Arriba
+KANSL1::TOP2A__17:46223671-17:40416895	KANSL1::TOP2A	17:46223671-17:40416895	-	-	CDS/splice-site	CDS/splice-site	deletion	low	373	Arriba
+SLFN5::ASIC2__17:35243143-17:33181642	SLFN5::ASIC2	17:35243143-17:33181642	+	+	5'UTR/splice-site	intron	duplication/5'-5'	high	373	Arriba
+TEFM::ATF7IP__17:30900413-12:14456561	TEFM::ATF7IP	17:30900413-12:14456561	-	+	CDS/splice-site	CDS/splice-site	translocation	high	373	Arriba
+TEFM::ATF7IP__17:30904066-12:14456561	TEFM::ATF7IP	17:30904066-12:14456561	-	+	CDS/splice-site	CDS/splice-site	translocation	high	373	Arriba
+SUZ12::RPL23AP4(8568)__17:31947685-21:46699794	SUZ12::RPL23AP4(8568)	17:31947685-21:46699794	+	-	CDS/splice-site	intergenic	translocation	high	373	Arriba
+MBTD1::ARHGAP11B-DT__17:51259143-15:30525343	MBTD1::ARHGAP11B-DT	17:51259143-15:30525343	-	+	5'UTR/splice-site	intron	translocation/5'-5'	high	373	Arriba
+GATAD2A::LINC02684__19:19386138-11:135061947	GATAD2A::LINC02684	19:19386138-11:135061947	+	-	5'UTR/splice-site	exon/splice-site	translocation	high	373	Arriba
+TADA2A::ATF7IP__17:37437829-12:14443367	TADA2A::ATF7IP	17:37437829-12:14443367	+	-	CDS/splice-site	intron	translocation/5'-5'	high	373	Arriba
+CAPN13::RABGGTA__2:30738235-14:24268619	CAPN13::RABGGTA	2:30738235-14:24268619	-	-	CDS/splice-site	CDS/splice-site	translocation	high	373	Arriba
+BABAM2::LINC00486__2:28244862-2:32913327	BABAM2::LINC00486	2:28244862-2:32913327	+	+	CDS/splice-site	intron	deletion	high	373	Arriba
+ARFGEF2::PIGT__20:49010404-20:45448244	ARFGEF2::PIGT	20:49010404-20:45448244	+	+	CDS/splice-site	CDS/splice-site	duplication	high	373	Arriba
+BLTP2::RAB11FIP4__17:28616389-17:31529712	BLTP2::RAB11FIP4	17:28616389-17:31529712	-	-	CDS	intron	duplication/5'-5'	medium	373	Arriba
+NBAS::ENSG00000307254__2:15539273-2:12025986	NBAS::ENSG00000307254	2:15539273-2:12025986	-	-	CDS	intron	deletion	medium	373	Arriba
+NBAS::ENSG00000307254__2:15551493-2:11980298	NBAS::ENSG00000307254	2:15551493-2:11980298	-	-	CDS/splice-site	exon/splice-site	deletion	low	373	Arriba
+NBAS::MIR3681HG__2:15539273-2:12025986	NBAS::MIR3681HG	2:15539273-2:12025986	-	-	CDS	intron	deletion/5'-5'	medium	373	Arriba
+PARVA::CDH4__11:12518517-20:61905787	PARVA::CDH4	11:12518517-20:61905787	+	-	CDS/splice-site	intron	translocation/5'-5'	medium	373	Arriba
+PACC1::KCNIP4__1:212375193-4:21097740	PACC1::KCNIP4	1:212375193-4:21097740	-	-	CDS/splice-site	intron	translocation	medium	373	Arriba
+ENSG00000256988::ST8SIA1__12:4826032-12:22278137	ENSG00000256988::ST8SIA1	12:4826032-12:22278137	.	.	intron	intron	deletion	medium	373	Arriba
+ST8SIA1::ENSG00000256988__12:22287149-12:4824690	ST8SIA1::ENSG00000256988	12:22287149-12:4824690	-	-	CDS/splice-site	exon/splice-site	deletion	low	373	Arriba
+BAG4::ENSG00000250637(25971),ENSG00000254069(15054)__8:38192795-8:43478883	BAG4::ENSG00000250637(25971),ENSG00000254069(15054)	8:38192795-8:43478883	+	+	CDS/splice-site	intergenic	deletion	medium	373	Arriba
+SCYL1::FADS2B__11:65527117-11:56904408	SCYL1::FADS2B	11:65527117-11:56904408	+	+	CDS/splice-site	exon/splice-site	duplication	medium	373	Arriba
+ENSG00000291063::MYO1D__17:31032506-17:32605241	ENSG00000291063::MYO1D	17:31032506-17:32605241	+	-	exon/splice-site	CDS/splice-site	inversion	medium	373	Arriba
+SUPT6H::WFIKKN2__17:28662381-17:50842180	SUPT6H::WFIKKN2	17:28662381-17:50842180	+	-	intron	3'UTR	inversion/3'-3'	low	373	Arriba
+RNF170::ENSG00000255101__8:42861745-8:42714995	RNF170::ENSG00000255101	8:42861745-8:42714995	-	-	CDS/splice-site	exon/splice-site	deletion/read-through	low	373	Arriba
+RNF170::ENSG00000255101__8:42870004-8:42714995	RNF170::ENSG00000255101	8:42870004-8:42714995	-	-	CDS/splice-site	exon/splice-site	deletion/read-through	low	373	Arriba
+MAST3::LSM4__19:18139124-19:18312702	MAST3::LSM4	19:18139124-19:18312702	+	-	CDS/splice-site	CDS/splice-site	inversion	low	373	Arriba
+KLF8::PHIP__X:56286927-6:78940637	KLF8::PHIP	X:56286927-6:78940637	+	-	3'UTR	3'UTR	translocation	low	373	Arriba
+ENSG00000290924::RABGAP1L__9:85840816-1:174990950	ENSG00000290924::RABGAP1L	9:85840816-1:174990950	+	+	exon	3'UTR	translocation	low	373	Arriba
+SGTB::MAP3K13__5:65666481-3:185291838	SGTB::MAP3K13	5:65666481-3:185291838	-	+	3'UTR	3'UTR	translocation	low	373	Arriba
+PEX3::RIOX2__6:143472221-3:97967527	PEX3::RIOX2	6:143472221-3:97967527	+	-	CDS	CDS	translocation	low	373	Arriba
+RANBP2::ENSG00000288721__2:108753892-6:41806998	RANBP2::ENSG00000288721	2:108753892-6:41806998	+	-	CDS	3'UTR	translocation	low	373	Arriba
+RANBP2::USP49__2:108753892-6:41806998	RANBP2::USP49	2:108753892-6:41806998	+	-	CDS	5'UTR	translocation	low	373	Arriba
+MCM5::NPIPB13__22:35408452-16:30225575	MCM5::NPIPB13	22:35408452-16:30225575	+	-	CDS	CDS	translocation	low	373	Arriba
+ENSG00000165121::RABGAP1L__9:85840816-1:174990950	ENSG00000165121::RABGAP1L	9:85840816-1:174990950	+	+	exon	3'UTR	translocation	low	373	Arriba
+PATJ::CNOT6__1:61795534-5:180550061	PATJ::CNOT6	1:61795534-5:180550061	+	+	CDS	CDS	translocation	low	373	Arriba
+TSPAN4::MIER1__11:865989-1:66985776	TSPAN4::MIER1	11:865989-1:66985776	+	+	CDS	3'UTR	translocation	low	373	Arriba
+FLNB::UTP18__3:58163221-17:51280051	FLNB::UTP18	3:58163221-17:51280051	+	+	CDS	CDS	translocation	low	373	Arriba
+GATAD2A::ENSG00000280171__19:19436219-19:20691340	GATAD2A::ENSG00000280171	19:19436219-19:20691340	+	+	5'UTR/splice-site	exon/splice-site	deletion	low	373	Arriba
+GATAD2A::ENSG00000280171__19:19406019-19:20691340	GATAD2A::ENSG00000280171	19:19406019-19:20691340	+	+	5'UTR/splice-site	exon/splice-site	deletion	low	373	Arriba
+MARCHF8::ZNF22-AS1__10:45533110-10:45004075	MARCHF8::ZNF22-AS1	10:45533110-10:45004075	-	-	CDS/splice-site	exon/splice-site	deletion	low	373	Arriba
+MARCHF8::ZNF22-AS1__10:45533110-10:45066221	MARCHF8::ZNF22-AS1	10:45533110-10:45066221	-	-	CDS/splice-site	exon/splice-site	deletion	low	373	Arriba
+MARCHF8::ZNF22-AS1__10:45533110-10:45066522	MARCHF8::ZNF22-AS1	10:45533110-10:45066522	-	-	CDS/splice-site	exon/splice-site	deletion	low	373	Arriba
+		17:46643259-17:48009736	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:46643259-17:48012093	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:46643259-17:48011155	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:46643259-17:48012140	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:28662342-17:50841925	+	-	UTR	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		7:6002453-7:76527764	-	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		7:6002580-7:76524572	-	+	CDS(complete)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+RAB11FIP4::SPAG5-AS1__17:31528778-17:28616450	RAB11FIP4::SPAG5-AS1	17:31528778-17:28616450	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+RAB11FIP4::SPAG5-AS1__17:31529712-17:28616389	RAB11FIP4::SPAG5-AS1	17:31529712-17:28616389	+	+	intronic	exonic(no-known-CDS)	.	.	373	FusionCatcher
+RAB11FIP4::SPAG5-AS1__17:31528850-17:28616618	RAB11FIP4::SPAG5-AS1	17:31528850-17:28616618	+	+	intronic	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:31024430-17:32047761	+	+	exonic(no-known-CDS)	CDS(complete)	.	.	373	FusionCatcher
+RABGEF1P1::RABGEF1__7:66592257-7:66775227	RABGEF1P1::RABGEF1	7:66592257-7:66775227	-	+	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		7:66592257-7:66775227	-	+	exonic(no-known-CDS)	UTR	.	.	373	FusionCatcher
+		17:46170855-17:40426518	-	-	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:46170855-17:40430945	-	-	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:30709811-17:31940286	+	+	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		15:28196215-15:22587344	-	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:31976614-17:30784783	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		17:31976614-17:30680002	+	+	CDS(truncated)	intronic	.	.	373	FusionCatcher
+		17:28209412-17:35258651	-	+	exonic(no-known-CDS)	UTR	.	.	373	FusionCatcher
+		18:43499485-13:85050148	+	-	exonic(no-known-CDS)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		7:74890846-7:6006031	+	-	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		19:19361655-19:20200076	-	+	intronic	UTR	.	.	373	FusionCatcher
+		19:19359113-19:20200076	-	+	intronic	UTR	.	.	373	FusionCatcher
+		19:20167360-19:19358961	+	-	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		14:43185164-14:42980422	-	-	exonic(no-known-CDS)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		7:74890408-7:100336201	-	+	exonic(no-known-CDS)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+CTBS::GNG5__1:84563257-1:84501970	CTBS::GNG5	1:84563257-1:84501970	-	-	in-frame	.	.	.	373	FusionCatcher
+KANSL1::TOP2A__17:46119968-17:40416895	KANSL1::TOP2A	17:46119968-17:40416895	-	-	UTR	CDS(truncated)	.	.	373	FusionCatcher
+KANSL1::TOP2A__17:46170855-17:40416895	KANSL1::TOP2A	17:46170855-17:40416895	-	-	out-of-frame	.	.	.	373	FusionCatcher
+		6:26925120-5:70995778	-	+	exonic(no-known-CDS)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		3:197618947-5:229121	-	+	exonic(no-known-CDS)	intronic	.	.	373	FusionCatcher
+		13:19703147-13:19201610	-	-	UTR	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		5:228333-3:197615685	+	-	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+STAG3::STAG3L4__7:100189596-7:67320103	STAG3::STAG3L4	7:100189596-7:67320103	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+STAG3L4::STAG3__7:67302885-7:100186200	STAG3L4::STAG3	7:67302885-7:100186200	+	+	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		4:109714344-1:52369279	-	+	UTR	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		11:243157-5:112867473	-	+	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+CBX3::CCDC32__7:26212583-15:40563710	CBX3::CCDC32	7:26212583-15:40563710	+	-	UTR	intronic	.	.	373	FusionCatcher
+CCDC32::CBX3__15:40561981-7:26201745	CCDC32::CBX3	15:40561981-7:26201745	-	+	UTR	UTR	.	.	373	FusionCatcher
+TEFM::ATF7IP__17:30900413-12:14456561	TEFM::ATF7IP	17:30900413-12:14456561	-	+	in-frame	.	.	.	373	FusionCatcher
+TEFM::ATF7IP__17:30904066-12:14456561	TEFM::ATF7IP	17:30904066-12:14456561	-	+	in-frame	.	.	.	373	FusionCatcher
+		3:10026041-3:9870069	-	-	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		8:65979293-8:66043488	+	+	exonic(no-known-CDS)	UTR	.	.	373	FusionCatcher
+BLTP2::MGP__17:28632794-12:14882097	BLTP2::MGP	17:28632794-12:14882097	-	-	intronic	CDS(no-known-start-or-end)	.	.	373	FusionCatcher
+		2:218135887-2:218060335	+	-	UTR	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		8:42861745-8:42714995	-	-	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		7:35873775-4:119462896	+	+	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		4:39500048-16:89684515	-	+	UTR	exonic(no-known-CDS)	.	.	373	FusionCatcher
+		4:39500038-16:89674338	-	+	UTR	intronic	.	.	373	FusionCatcher
+		4:39499880-16:89681902	-	+	UTR	intronic	.	.	373	FusionCatcher
+		4:39499880-16:89674676	-	+	UTR	intronic	.	.	373	FusionCatcher
+		6:31354060-6:31268940	+	+	exonic(no-known-CDS)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+AP2B1::MGP__17:35616156-12:14882097	AP2B1::MGP	17:35616156-12:14882097	+	-	intronic	CDS(no-known-start-or-end)	.	.	373	FusionCatcher
+		1:16954357-1:16618968	+	-	CDS(truncated)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+ERBB2::GRB7__17:39730263-17:39742252	ERBB2::GRB7	17:39730263-17:39742252	+	+	UTR	CDS(truncated)	.	.	373	FusionCatcher
+MAL2::FN1__8:119243709-2:215378372	MAL2::FN1	8:119243709-2:215378372	+	-	UTR	intronic	.	.	373	FusionCatcher
+MGP::AP2B1__12:14882120-17:35628928	MGP::AP2B1	12:14882120-17:35628928	-	+	CDS(no-known-start-or-end)	intronic	.	.	373	FusionCatcher
+		1:17520458-1:17580553	+	+	exonic(no-known-CDS)	UTR	.	.	373	FusionCatcher
+		12:9657160-12:9680923	+	+	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		9:101039632-8:66043488	-	+	exonic(no-known-CDS)	UTR	.	.	373	FusionCatcher
+		6:78597886-1:171275346	-	+	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		22:27930694-22:27914347	-	-	exonic(no-known-CDS)	CDS(truncated)	.	.	373	FusionCatcher
+		9:40571871-22:22318899	-	+	exonic(no-known-CDS)	exonic(no-known-CDS)	.	.	373	FusionCatcher
+GATAD2A::LINC02684__19:19386138-11:135061947	GATAD2A::LINC02684	19:19386138-11:135061947	+	-	UTR	exonic(no-known-CDS)	.	.	373	FusionCatcher
+NAIP::OCLN__5:70979869-5:69534694	NAIP::OCLN	5:70979869-5:69534694	-	+	out-of-frame	.	.	.	373	FusionCatcher
+XPO1::ERBB2__2:61514062-17:39715286	XPO1::ERBB2	2:61514062-17:39715286	-	+	UTR	CDS(truncated)	.	.	373	FusionCatcher
