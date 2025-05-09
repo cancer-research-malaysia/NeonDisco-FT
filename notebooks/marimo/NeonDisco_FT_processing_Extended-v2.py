@@ -26,7 +26,7 @@ def _(mo):
         	- `fc_tool_suffix`: the tool suffix matching the file name (e.g. `fc`)
         	- `output_dir`: the output directory to save the processed files
 
-        2. Then, load up the two datasets on Marimo Notebook and concatenate the dataframes together so that Arriba+FusionCatcher unfiltered FT data are combined into one dataframe and saved in one `.parquet` and `.tsv` file. 
+        2. Then, load up the two datasets on Marimo Notebook and concatenate the dataframes together so that Arriba+FusionCatcher unfiltered FT data are combined into one dataframe and saved in one `.parquet` and `.tsv` file.
         """
     )
     return
@@ -356,7 +356,7 @@ def _(
     results = combine_fusion_data(sample_name_input.value, arr_file_input.value, fc_file_input.value, output_dir_input.value)
     results
 
-    return (results,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -471,7 +471,25 @@ def _(pl):
     # load up the concatenated dataframe
 
     concat_df = pl.read_parquet('/home/ec2-user/repos/FT-NeonDisco/output/CCLE+internal/01-CCLE+internal-ALL-FT-UNFILTERED.parquet')
+
     concat_df
+
+    return (concat_df,)
+
+
+@app.cell
+def _(concat_df, pl):
+    df = (
+            concat_df
+                .group_by("breakpointID")
+                .agg(pl.len(), 
+                    pl.col("sampleID").unique().alias("sampleIDs"),
+                    pl.col("toolID")
+                    )
+                .sort("len", descending=True)
+         )
+    df
+
     return
 
 
@@ -481,30 +499,9 @@ def _(mo):
     return
 
 
-@app.cell
-def _(mo):
-    mo.md(r"""We can first check to see only the unique rows based on the breakpointID.""")
-    return
-
-
-@app.cell
-def _(results):
-    # Check the unique rows based on the 'breakpointID'
-    results_uniq = results.unique(subset=['breakpointID'])
-
-    return (results_uniq,)
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""Let's convert the Polars dataframe into a Pandas one for easy processing.""")
-    return
-
-
-@app.cell
-def _(results_uniq):
-    results_uniq_df = results_uniq.to_pandas()
-    results_uniq_df
     return
 
 
