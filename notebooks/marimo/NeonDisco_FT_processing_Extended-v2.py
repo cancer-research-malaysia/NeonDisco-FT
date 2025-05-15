@@ -354,7 +354,6 @@ def _(
     # Direct call without UI
 
     results = combine_fusion_data(sample_name_input.value, arr_file_input.value, fc_file_input.value, output_dir_input.value)
-    results
 
     return
 
@@ -401,11 +400,6 @@ def _(combine_fusion_data):
 
                 # call the function
                 combine_fusion_data(sample_idx, arr_fpath, fc_fpath, output_dir='/home/ec2-user/repos/FT-NeonDisco/output/CCLE+internal')
-
-                # print the sample ID
-        return print(f"Combining Arriba and FusionCatcher data of {sample_idx} is completed.")
-
-
     _()
     return
 
@@ -443,7 +437,7 @@ def _():
     # Call the function to get the combined DataFrame
     combined_df = _()
     # Display the first few rows of the combined DataFrame
-    combined_df
+
     # save the combined DataFrame to a Parquet file
     combined_df.write_parquet('/home/ec2-user/repos/FT-NeonDisco/output/CCLE+internal/01-CCLE+internal-ALL-FT-UNFILTERED.parquet')
     return
@@ -472,8 +466,6 @@ def _(pl):
 
     concat_df = pl.read_parquet('/home/ec2-user/repos/FT-NeonDisco/output/CCLE+internal/01-CCLE+internal-ALL-FT-UNFILTERED.parquet')
 
-    concat_df
-
     return (concat_df,)
 
 
@@ -488,7 +480,7 @@ def _(concat_df, pl):
                     )
                 .sort("len", descending=True)
          )
-    df
+
 
     return
 
@@ -512,7 +504,6 @@ def _():
 
     panel_of_norms_df = pd.read_csv('/home/ec2-user/repos/FT-NeonDisco/output/TCGANormals/Arr-and-FC_TCGANormals-UNIQUE-breakpointID-list.tsv', sep='\t')
 
-    panel_of_norms_df
     return (panel_of_norms_df,)
 
 
@@ -521,7 +512,7 @@ def _(panel_of_norms_df):
     # then get the unique breakpoints as set
 
     panel_of_normset = set(panel_of_norms_df['breakpointID'])
-    panel_of_normset
+
     return (panel_of_normset,)
 
 
