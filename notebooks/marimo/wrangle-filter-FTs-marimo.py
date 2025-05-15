@@ -191,7 +191,25 @@ def _(ccle_added_df, pl, pon_pqdf):
     # retain only the rows in the ccle_added_df dataframe where the breakpointID is not in the set of breakpointIDs from the pon_df dataframe
     results_df = ccle_added_df.filter(~pl.col('breakpointID').is_in(pon_set))
     results_df
+    return (results_df,)
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""Finally, we can add a column for FusionInspector, where it contains the same value as 'fusionGenePair' but with the separator :: changed into `--`.""")
     return
+
+
+@app.cell
+def _(results_df, pl):
+    # add a column for FusionInspector, where it contains the same value as 'fusionGenePair' but with the separator :: changed into --
+    results_df_fusIns = results_df.with_columns(
+        pl.col('fusionGenePair').str.replace('::', '--').alias('fusionGenePair_FusInspect')
+    )
+    results_df_fusIns
+    
+
+    return (results_df_fusIns,)
 
 
 if __name__ == "__main__":
