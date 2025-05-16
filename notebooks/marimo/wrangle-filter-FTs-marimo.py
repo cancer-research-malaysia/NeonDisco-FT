@@ -216,7 +216,7 @@ def _(results_df_fusIns, pl):
     # we need to represent the nested structure of the detectedBy column as a list of strings
     # Format detectedBy column to use " | " as separator between tools because polars represents the list as nested data
     export_df = results_df_fusIns.with_columns([
-        pl.col('detectedBy').list.join(" | ").alias('detectedBy')
+        pl.col('detectedBy').list.eval(pl.element().cast(pl.Utf8)).list.join(" | ").alias('detectedBy')
     ])
     export_df
     return (export_df,)
