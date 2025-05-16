@@ -204,7 +204,7 @@ def _(mo):
 def _(results_df, pl):
     # add a column for FusionInspector, where it contains the same value as 'fusionGenePair' but with the separator :: changed into --
     results_df_fusIns = results_df.with_columns(
-        pl.col('fusionGenePair').str.replace('::', '--').alias('fusionGenePair_FusInspect')
+        pl.col('fusionGenePair').cast(pl.Utf8).str.replace('::', '--').alias('fusionGenePair_FusIns')
     )
     results_df_fusIns
     
