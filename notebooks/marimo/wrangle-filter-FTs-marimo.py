@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.13.9"
+__generated_with = "0.13.15"
 app = marimo.App()
 
 
@@ -201,18 +201,19 @@ def _(mo):
 
 
 @app.cell
-def _(results_df, pl):
+def _(pl, results_df):
     # add a column for FusionInspector, where it contains the same value as 'fusionGenePair' but with the separator :: changed into --
     results_df_fusIns = results_df.with_columns(
         pl.col('fusionGenePair').cast(pl.Utf8).str.replace('::', '--').alias('fusionGenePair_FusIns')
     )
     results_df_fusIns
-    
+
 
     return (results_df_fusIns,)
 
+
 @app.cell
-def _(results_df_fusIns, pl):
+def _(pl, results_df_fusIns):
     # we need to represent the nested structure of the detectedBy column as a list of strings
     # Format detectedBy column to use " | " as separator between tools because polars represents the list as nested data
     export_df = results_df_fusIns.with_columns([
@@ -220,6 +221,17 @@ def _(results_df_fusIns, pl):
     ])
     export_df
     return (export_df,)
+
+
+@app.cell
+def _(export_df, pl):
+    # let's grab just the fusionGenePair_FusIns column
+    fusins_df = export_df.select(
+        pl.col('fusionGenePair_FusIns').unique()
+    )
+    fusins_df
+    fusins_df.write_csv("/home/ec2-user/repos/FT-NeonDisco/output/minimal-test/SAMPLEID_fusins.txt", include_header=False)
+    return
 
 
 if __name__ == "__main__":
