@@ -39,7 +39,7 @@ def _():
 
 @app.cell
 def _(collated_man_df):
-    collated_man_df # type: ignore
+    collated_man_df
     return
 
 
@@ -221,6 +221,13 @@ def _(pl, results_df_fusIns):
     ])
     export_df
     return (export_df,)
+
+
+@app.cell
+def _(export_df, pl):
+    export_filt_df = export_df.filter(pl.col("toolOverlapCount") > 1)
+    export_filt_df
+    return
 
 
 @app.cell
