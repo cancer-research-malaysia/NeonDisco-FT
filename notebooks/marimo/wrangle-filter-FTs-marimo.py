@@ -466,7 +466,7 @@ def _(pl):
     collated_df = pl.scan_csv('/home/ec2-user/repos/FT-NeonDisco/output/minimal-test/collate-RAW-OUT-test.tsv', separator='\t').collect()
 
     collated_df
-    return
+    return (collated_df,)
 
 
 @app.cell(hide_code=True)
@@ -476,10 +476,10 @@ def _(mo):
 
 
 @app.cell
-def _(collated_pldf):
+def _(collated_df):
     # get unique rows based on fusionTranscriptID column and originalTool column
 
-    unique_collated_df = collated_pldf.unique(subset=["fusionTranscriptID", "originalTool"])
+    unique_collated_df = collated_df.unique(subset=["fusionTranscriptID", "originalTool"])
 
     unique_collated_df # type: ignore
 

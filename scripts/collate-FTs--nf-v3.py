@@ -59,13 +59,13 @@ def wrangle_df(file_path: str, sample_id: str, sample_num: str, tool_name: str) 
         case 'FusionCatcher':
             # Handle NaN values in gene symbol columns by replacing with gene IDs
             gene1_expr = (
-                pl.when(pl.col('Gene_1_symbol(5end_fusion_partner)').is_null() | (pl.col('Gene_1_symbol(5end_fusion_partner)') == "."))
+                pl.when((pl.col('Gene_1_symbol(5end_fusion_partner)') == "NA"))
                 .then(pl.col('Gene_1_id(5end_fusion_partner)'))
                 .otherwise(pl.col('Gene_1_symbol(5end_fusion_partner)'))
             )
             
             gene2_expr = (
-                pl.when(pl.col('Gene_2_symbol(3end_fusion_partner)').is_null() | (pl.col('Gene_2_symbol(3end_fusion_partner)') == "."))
+                pl.when((pl.col('Gene_2_symbol(3end_fusion_partner)') == "NA"))
                 .then(pl.col('Gene_2_id(3end_fusion_partner)'))
                 .otherwise(pl.col('Gene_2_symbol(3end_fusion_partner)'))
             )
