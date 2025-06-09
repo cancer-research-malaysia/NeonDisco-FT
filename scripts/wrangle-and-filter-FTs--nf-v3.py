@@ -19,45 +19,70 @@ def check_file_empty(file_path, file_description):
         print(f"ERROR: Could not read {file_description}: {e}")
         return True
 
-def consolidate_duplicate_rows(df, groupby_cols):
-    """
-    Consolidate rows that have the same values in groupby_cols by filling
-    NA values with non-NA values from other rows in the same group.
-    
-    Args:
-        df: Polars DataFrame
-        groupby_cols: List of column names to group by
-    
-    Returns:
-        Polars DataFrame with consolidated rows
-    """
-    
-    # Handle empty DataFrame case
-    if df.height == 0:
-        print("Input DataFrame is empty (no data rows). Returning empty DataFrame with same schema.")
-        return df
-    
-    # Check if groupby columns exist
-    missing_cols = [col for col in groupby_cols if col not in df.columns]
-    if missing_cols:
-        raise ValueError(f"Groupby columns not found in DataFrame: {missing_cols}")
-    
-    # Define aggregation strategy for non-groupby columns only
-    # (groupby columns are automatically included in the result)
-    agg_exprs = []
-    
-    for col in df.columns:
-        if col not in groupby_cols:
-            # For non-groupby columns, take the first non-null value
-            # Use drop_nulls().first() which is more reliable than filter + first
-            agg_exprs.append(
-                pl.col(col).drop_nulls().first().alias(col)
-            )
-    
-    # Group by the specified columns and aggregate
-    result = df.group_by(groupby_cols).agg(agg_exprs)
-    
-    return result
+# Alternative approach to merge tool-specific information using explicit wrangling logic
+def merge_by_tool_suffixes(df, groupby_cols):
+    # Get unique fusions with their tools
+    fusion_summary = df.group_by(groupby_cols).agg([
+        pl.col("originalTool").unique().alias("detectedBy"),
+        pl.col("originalTool").unique().count().alias("toolOverlapCount")
+    ])
+
+    result_rows = []
+
+    for fusion_row in fusion_summary.iter_rows(named=True):
+        # Start with fusion ID columns
+        merged_row = {col: fusion_row[col] for col in groupby_cols}
+        tools = fusion_row["detectedBy"]
+        tool_count = fusion_row["toolOverlapCount"]
+        merged_row["detectedBy"] = " | ".join(tools)
+        merged_row["toolOverlapCount"] = tool_count
+
+        # Get data for this fusion
+        fusion_filter = pl.all_horizontal([
+            pl.col(col) == fusion_row[col] for col in groupby_cols
+        ])
+        fusion_data = df.filter(fusion_filter)
+
+        # For each column, get data from appropriate tool
+        for col in df.columns:
+            if col not in groupby_cols and col != "originalTool":
+                # Check if this is a tool-specific column
+                if col.endswith("_ARR") and "Arriba" in tools:
+                    # Get Arriba data
+                    arriba_data = fusion_data.filter(pl.col("originalTool") == "Arriba")
+                    if len(arriba_data) > 0:
+                        values = arriba_data.select(col).to_series().to_list()
+                        non_null_values = [v for v in values if v is not None and v != "NA"]
+                        merged_row[col] = non_null_values[0] if non_null_values else "NA"
+                    else:
+                        merged_row[col] = "NA"
+                elif col.endswith("_FC") and "FusionCatcher" in tools:
+                    # Get FusionCatcher data
+                    fc_data = fusion_data.filter(pl.col("originalTool") == "FusionCatcher")
+                    if len(fc_data) > 0:
+                        values = fc_data.select(col).to_series().to_list()
+                        non_null_values = [v for v in values if v is not None and v != "NA"]
+                        merged_row[col] = non_null_values[0] if non_null_values else "NA"
+                    else:
+                        merged_row[col] = "NA"
+                elif col.endswith("_SF") and "STAR-Fusion" in tools:
+                    # Get STAR-Fusion data
+                    sf_data = fusion_data.filter(pl.col("originalTool") == "STAR-Fusion")
+                    if len(sf_data) > 0:
+                        values = sf_data.select(col).to_series().to_list()
+                        non_null_values = [v for v in values if v is not None and v != "NA"]
+                        merged_row[col] = non_null_values[0] if non_null_values else "NA"
+                    else:
+                        merged_row[col] = "NA"
+                else:
+                    # For non-tool-specific columns, take first non-null
+                    values = fusion_data.select(col).to_series().to_list()
+                    non_null_values = [v for v in values if v is not None and v != "NA"]
+                    merged_row[col] = non_null_values[0] if non_null_values else "NA"
+
+        result_rows.append(merged_row)
+
+    return pl.DataFrame(result_rows)
 
 def create_empty_output_files(output_filename):
     """
@@ -69,7 +94,8 @@ def create_empty_output_files(output_filename):
         'breakpointID': [],
         '5pStrand': [],
         '3pStrand': [],
-        'originalTool': [],
+        'detectedBy': [],
+        'toolOverlapCount': [],
         'sampleID': [],
         'sampleNum': [],
         'sampleNum_Padded': [],
@@ -83,8 +109,6 @@ def create_empty_output_files(output_filename):
         'junctionReadCount_SF': [],
         'spanningFragCount_SF': [],
         'largeAnchorSupport_SF': [],
-        'detectedBy': [],
-        'toolOverlapCount': [],
         'foundInCCLE&InternalCLs': [],
         'fusionGenePair_FusIns': []
     })
@@ -101,12 +125,13 @@ def create_empty_output_files(output_filename):
 def main():
     """
     Process and filter fusion transcript data based on:
-    1. Consolidating duplicate entries (filling NA values across rows with same fusion IDs)
-    2. Removing duplicate entries
-    3. Adding tool overlap information
-    4. Checking presence in CCLE and internal cell lines
-    5. Filtering out fusions found in panel of normals
-    6. Formatting for FusionInspector compatibility
+    1. Consolidating duplicate entries by:-
+        - filling NA values across rows of tool-specific columns having similar fusion IDs)
+        - removing duplicate entries
+        - adding tool overlap information
+    2. Checking presence in CCLE and internal cell lines and add as a column
+    3. Filtering out fusions found in panel of normals
+    4. Formatting for FusionInspector compatibility
     The script takes command-line arguments for input files and outputs the results in TSV format and a txt format for Fusion Inspector.
     """
     # Parse command-line arguments
@@ -134,94 +159,45 @@ def main():
     print("Loading collated fusion transcript data...")
     collated_df = pl.scan_parquet(parquet_input_file).collect()
     
-    # Step 1: Consolidate duplicate rows by filling NA values across rows with the same fusion identifiers
-    print("Consolidating duplicate rows (filling NA values)...")
-    groupby_cols = ['fusionTranscriptID', 'fusionGenePair', 'breakpointID', '5pStrand', '3pStrand', 'originalTool']
-    
-    # Check if required columns exist for consolidation
-    missing_cols = [col for col in groupby_cols if col not in collated_df.columns]
-    if missing_cols:
-        print(f"Warning: Expected consolidation columns not found: {missing_cols}")
-        print(f"Available columns: {collated_df.columns}")
-        print("Skipping consolidation step...")
-        consolidated_df = collated_df
-    else:
-        consolidated_df = consolidate_duplicate_rows(collated_df, groupby_cols)
-        print(f"Consolidation complete: {len(collated_df)} -> {len(consolidated_df)} rows")
-    
-    # Step 2: Filter for unique rows based on fusionTranscriptID and originalTool
-    print("Filtering for unique rows based on fusionTranscriptID and originalTool...")
-    unique_collated_df = consolidated_df.unique(subset=["fusionTranscriptID", "originalTool"])
-    
-    # Step 3: Create a new dataframe with unique fusionTranscriptIDs and list of tools that detected them
-    print("Creating tool overlap information...")
-    tool_group_df = (
-        unique_collated_df
-        .group_by('fusionTranscriptID')
-        .agg(
-            pl.col('originalTool').unique().alias('detectedBy'),
-            pl.col('originalTool').unique().count().alias('toolOverlapCount')
-        )
-    )
-    
-    # Step 4: Create tool overlap information and combine data from multiple tools
-    print("Creating tool overlap information and combining multi-tool data...")
-    
-    # First, create tool overlap summary
-    tool_group_df = (
-        unique_collated_df
-        .group_by('fusionTranscriptID')
-        .agg(
-            pl.col('originalTool').unique().alias('detectedBy'),
-            pl.col('originalTool').unique().count().alias('toolOverlapCount')
-        )
-    )
-    
-    # Then, consolidate data across tools for the same fusion
-    # For each fusion, combine non-null values from all tools
-    non_tool_cols = [col for col in unique_collated_df.columns 
-                     if col not in ['fusionTranscriptID', 'originalTool']]
-    
-    fusion_agg_exprs = []
-    for col in non_tool_cols:
-        # Take the first non-null value across all tools for this fusion
-        fusion_agg_exprs.append(
-            pl.col(col).drop_nulls().first().alias(col)
-        )
-    
-    # Combine data across tools for each fusion
-    combined_fusion_df = (
-        unique_collated_df
-        .group_by('fusionTranscriptID')
-        .agg(fusion_agg_exprs)
-    )
-    
-    # Join with tool overlap information
-    unique_fusions_df = combined_fusion_df.join(tool_group_df, on='fusionTranscriptID')
-    
-    # Step 5: Load CCLE & Internal Cell Line FT data
-    print("Loading CCLE & Internal Cell Line FT data...")
-    if check_file_empty(ccle_internal_cell_line_file, "CCLE & Internal Cell Line data"):
-        ccle_set = set()  # Empty set if file is empty
-    else:
-        ccle_df = pl.scan_parquet(ccle_internal_cell_line_file).collect()
-        ccle_set = set(ccle_df['breakpointID'].to_list())
+####################
 
-    # Step 6: Add 'foundInCCLE&InternalCLs' column to unique fusions
+    # Step 1: Consolidate duplicate rows and reshape the DataFrame
+    print("Consolidating duplicate rows...")
+    # Define the columns to group by
+    groupby_cols = ['fusionTranscriptID', 'fusionGenePair', 'breakpointID', '5pStrand', '3pStrand']
+    consolidated_df = merge_by_tool_suffixes(collated_df, groupby_cols)
+    
+    if not consolidated_df.is_empty():
+        print(f"Consolidation complete: {len(collated_df)} -> {len(consolidated_df)} rows")
+
+    # now sort the consolidated DataFrame by 'fusionTranscriptID'
+    consolidated_df = consolidated_df.sort('fusionTranscriptID')
+
+####################
+
+    # Step 2: Load CCLE & Internal Cell Line FT data
+    print("Loading CCLE & Internal Cell Line FT data...")
+
+    ccle_df = pl.scan_parquet(ccle_internal_cell_line_file).collect()
+    # ccle_df.write_csv(f"{output_filename}-ccle-internal-cell-lines.tsv", separator='\t', include_header=True)
+    ccle_set = set(ccle_df['breakpointID'].to_list())
+
+    # Add 'foundInCCLE&InternalCLs' column to unique fusions
     print("Adding 'foundInCCLE&InternalCLs' column to unique fusions...")
-    ccle_added_df = unique_fusions_df.with_columns(
+    ccle_added_df = consolidated_df.with_columns(
         pl.when(pl.col('breakpointID').is_in(ccle_set)).then(True).otherwise(False).alias('foundInCCLE&InternalCLs')
     )
-    
-    # Step 7: Load Panel of Normals (TCGA Normals) data
-    print("Loading Panel of Normals data...")
-    if check_file_empty(panel_of_normals_file, "Panel of Normals data"):
-        pon_set = set()  # Empty set if file is empty
-    else:
-        pon_df = pl.scan_parquet(panel_of_normals_file).collect()
-        pon_set = set(pon_df['breakpointID'].to_list())
 
-    # Step 8: Filter out breakpoints that appear in the Panel of Normals
+################
+
+    # Step 3: Load Panel of Normals (TCGA Normals) data
+    print("Loading Panel of Normals data...")
+
+    pon_df = pl.scan_parquet(panel_of_normals_file).collect()
+    # pon_df.write_csv(f"{output_filename}-panel-of-normals.tsv", separator='\t', include_header=True)
+    pon_set = set(pon_df['breakpointID'].to_list())
+
+    # Filter out breakpoints that appear in the Panel of Normals
     print("Filtering out breakpoints that appear in the Panel of Normals...")
     normfilt_df = ccle_added_df.filter(~pl.col('breakpointID').is_in(pon_set))
 
@@ -233,22 +209,23 @@ def main():
         print("Processing complete - all fusions filtered out!")
         return
 
-    # Step 9: Create FusionInspector format column
+##############
+
+    # Step 4: Create FusionInspector format column
     print("Creating FusionInspector format column...")
     final_result_df = normfilt_df.with_columns(
-        pl.col('fusionGenePair').cast(pl.Utf8).str.replace('::', '--').alias('fusionGenePair_FusIns')
+        pl.col('fusionGenePair').cast(pl.Utf8).str.replace('::', '--').alias('GenePairforFusInspector')
     )
     
-    # Step 10: Format detectedBy column and apply consensus filtering
-    print("Formatting output and applying consensus filtering...")
-    export_df = final_result_df.with_columns([
-        pl.col('detectedBy').list.eval(pl.element().cast(pl.Utf8)).list.join(" | ").alias('detectedBy')
-    ])
+##############
+
+    # Step 5: Apply consensus filtering
+    print("Applying consensus filtering...")
 
     # Filter for rows based on 'toolOverlapCount'
     # > 0 is default to keep the union of all fusions detected by at least one tool
     # change this value for different filtering
-    export_consensus_df = export_df.filter(pl.col('toolOverlapCount') > 0)
+    export_consensus_df = final_result_df.filter(pl.col('toolOverlapCount') > 0)
 
     # Check if consensus filtering removed all fusions
     if export_consensus_df.height == 0:
@@ -258,14 +235,14 @@ def main():
         print("Processing complete - no consensus fusions found!")
         return
 
-    # Step 11: Save results
+    # Step 6: Save results
     print(f"Saving filtered results to {output_filename}.tsv...")
     export_consensus_df.write_csv(f"{output_filename}.tsv", separator='\t')
     print(f"Results saved to {output_filename}.tsv")
     
     # Write unique fusion gene pairs for FusionInspector
-    export_consensus_df.select('fusionGenePair_FusIns').unique().write_csv(f"{output_filename}-unique-genePairs-for-FusIns.txt", include_header=False)
-    print(f"Unique fusion gene pairs for FusionInspector saved to {output_filename}-unique-genePairs-for-FusIns.txt")
+    export_consensus_df.select('GenePairforFusInspector').unique().write_csv(f"{output_filename}-unique-genePairs-for-FusInspector.txt", include_header=False)
+    print(f"Unique fusion gene pairs for FusionInspector saved to {output_filename}-unique-genePairs-for-FusInspector.txt")
     
     print("Processing complete!")
 
