@@ -79,6 +79,8 @@ def update_coordinates(fusion_file, bed_5prime, bed_3prime, output_file):
         
         # Save updated data
         updated_df.to_csv(output_file, sep='\t', index=False)
+        # also save as parquet
+        updated_df.to_parquet(output_file.replace('.tsv', '.parquet'), index=False)
         
         # Print summary
         print(f"\nUpdate Summary:")
@@ -136,8 +138,8 @@ BED file format (tab-separated):
     parser.add_argument('bed_3prime', 
                        help="3' reference BED file with hg38 coordinates")
     parser.add_argument('-o', '--output', 
-                       default='updated_coordinates_Klijn_fusion_data.tsv',
-                       help='Output file name (default: updated_coordinates_Klijn_fusion_data.tsv)')
+                       default='Klijn-et-al-hg38-lifted-cancer-cell-line-fusions.tsv',
+                       help='Output file name (default: Klijn-et-al-hg38-lifted-cancer-cell-line-fusions.tsv)')
     
     args = parser.parse_args()
     
